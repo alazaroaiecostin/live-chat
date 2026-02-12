@@ -1,0 +1,32 @@
+<div class="login" *ngIf="!connected">
+  <h2>Live Chat</h2>
+  <input [(ngModel)]="username" placeholder="Username">
+  <button (click)="connect()">Connect</button>
+</div>
+
+<div class="chat-container" *ngIf="connected" [ngClass]="theme">
+  <div class="top-bar">
+    <span>Logged in as {{ username }}</span>
+    <button (click)="toggleTheme()">🌗</button>
+  </div>
+
+  <div class="users">
+    <b>Online</b>
+    <div *ngFor="let u of users">{{ u }}</div>
+  </div>
+
+  <div class="chat-box" #chatBox>
+    <div *ngFor="let msg of messages" 
+         class="message"
+         [class.own]="msg.own"
+         [class.system]="msg.system">
+      <small>{{ msg.userName }} • {{ msg.timestamp }}</small>
+      <div>{{ msg.message }}</div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input [(ngModel)]="message" placeholder="Scrie mesaj..." (keyup.enter)="send()">
+    <button (click)="send()">Trimite</button>
+  </div>
+</div>
